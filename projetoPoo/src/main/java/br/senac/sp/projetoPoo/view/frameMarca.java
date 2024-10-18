@@ -72,8 +72,11 @@ public class frameMarca extends JFrame {
 		btnSalvar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(tfNome.getText().trim().isEmpty()) {
-					JOptionPane.showMessageDialog(null, "Informe o Nome","Aviso",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(frameMarca.this, "Informe o Nome","Aviso",JOptionPane.INFORMATION_MESSAGE);
 					tfNome.requestFocus();
+				}else {
+					marca = new Marca();
+					marca.setNome(tfNome.getText().trim());
 				}
 			}
 		});
