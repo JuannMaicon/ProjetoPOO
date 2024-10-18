@@ -5,7 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import br.senac.sp.projetoPoo.modelo.Marca;
+
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -20,6 +24,7 @@ public class frameMarca extends JFrame {
 	private JTextField tfId;
 	private JTextField textField_2;
 	private JTextField lblLogo;
+	private Marca marca;
 
 	/**
 	 * Launch the application.
@@ -41,6 +46,7 @@ public class frameMarca extends JFrame {
 	 * Create the frame.
 	 */
 	public frameMarca() {
+		setTitle("Cadastro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -54,7 +60,7 @@ public class frameMarca extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblId = new JLabel("ID:");
-		lblId.setBounds(10, 9, 46, 14);
+		lblId.setBounds(10, 9, 46, 17);
 		contentPane.add(lblId);
 		
 		JButton btnExcluir = new JButton("EXCLUIR");
@@ -63,6 +69,14 @@ public class frameMarca extends JFrame {
 		contentPane.add(btnExcluir);
 		
 		JButton btnSalvar = new JButton("SALVAR");
+		btnSalvar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(tfNome.getText().trim().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "Informe o Nome","Aviso",JOptionPane.INFORMATION_MESSAGE);
+					tfNome.requestFocus();
+				}
+			}
+		});
 		btnSalvar.setMnemonic('s');
 		btnSalvar.setBounds(10, 86, 89, 23);
 		contentPane.add(btnSalvar);
