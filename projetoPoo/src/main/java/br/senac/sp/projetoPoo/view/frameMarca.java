@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import br.senac.sp.projetoPoo.dao.ConnectionFactory;
+import br.senac.sp.projetoPoo.dao.MarcaDAO;
 import br.senac.sp.projetoPoo.modelo.Marca;
 
 import javax.swing.JLabel;
@@ -14,6 +15,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
@@ -26,6 +28,7 @@ public class frameMarca extends JFrame {
 	private JTextField textField_2;
 	private JTextField lblLogo;
 	private Marca marca;
+	private  MarcaDAO dao;
 
 	/**
 	 * Launch the application.
@@ -36,7 +39,7 @@ public class frameMarca extends JFrame {
 				try {
 					frameMarca frame = new frameMarca();
 					frame.setVisible(true);
-					ConnectionFactory.getConexao();
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -48,6 +51,7 @@ public class frameMarca extends JFrame {
 	 * Create the frame.
 	 */
 	public frameMarca() {
+		dao = new MarcaDAO(ConnectionFactory.getConexao());
 		setTitle("Cadastro");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -80,6 +84,15 @@ public class frameMarca extends JFrame {
 				} else {
 					marca = new Marca();
 					marca.setNome(tfNome.getText().trim());
+				//TODO setar a logo
+					try {
+						dao.inserir(marca);
+						limpar();
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(frameMarca.this, e1.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+						e1.printStackTrace();
+					}
+					
 				}
 			}
 		});
@@ -118,5 +131,12 @@ public class frameMarca extends JFrame {
 		contentPane.add(lblLogo);
 		lblLogo.setOpaque(true);
 		lblLogo.setColumns(10);
+	}
+	private void limpar() {
+		tfId.setText("");
+		tfNome.setText("");
+		marca = null;
+		tfNome.requestFocus();
+		
 	}
 }
